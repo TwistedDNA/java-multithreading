@@ -1,6 +1,7 @@
 package generics;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Created by Lx on 4/18/2017.
@@ -8,6 +9,7 @@ import java.util.function.Consumer;
 public class ChainOfCommand {
 
     private Object obj;
+    private Function executeOnceMatch;
 
     public ChainOfCommand(Object obj) {
         this.obj = obj;
@@ -24,19 +26,22 @@ public class ChainOfCommand {
         return new ChainOfCommand(obj);
     }
 
-    public <T> T is(Class<T> clazz){
-        return new Typed(T);
+    public <T> Typed is(Class<T> clazz) {
+        if (executeOnceMatch == null && obj.getClass().equals(clazz)) {
+            return new Typed(clazz);
+        }
     }
 
     class Typed<T> {
+
         private T type;
 
         public Typed(T type) {
             this.type = type;
         }
 
-        public  thenReturn(Consumer consumer){
-
+        public T thenReturn(Consumer consumer) {
+            return null;
         }
     }
 }
